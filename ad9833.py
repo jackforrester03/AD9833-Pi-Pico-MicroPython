@@ -1,18 +1,14 @@
 from machine import Pin, SPI
 from time import sleep
-import binascii
 
 class AD9833:
-    def __init__(self):
-        self.spi = SPI(0, baudrate = 1000000, sck = Pin(18, Pin.OUT),
-                      miso = Pin(16, Pin.OUT), mosi = Pin(19, Pin.OUT),
+    def __init__(self, sckPin = 18, misoPin=16, mosiPin=19, csPin=17):
+        self.spi = SPI(0, baudrate = 1000000, sck = Pin(sckPin, Pin.OUT),
+                      miso = Pin(misoPin, Pin.OUT), mosi = Pin(mosiPin, Pin.OUT),
                       polarity = 1, phase = 1)
 
-        self.cs = Pin(17, Pin.OUT)
+        self.cs = Pin(csPin, Pin.OUT)
         self.cs.value(1)
-
-            # Reference clock value
-            # Change this to match yours!
         self.MCLK = 25*10**6
         self.reset()
 
@@ -43,8 +39,15 @@ class AD9833:
         32 - square (half frequency)
         '''
         self.cs.value(0)
+        # Setting the control register
+        # 0x20 
+        # - sets the B2B bit high to allow frequnecies to be loaded in
+        # - No reset, using FREQ0 ande PHASE0 registers, HLB is ignoored
+
+        # 0x??
+        # The choice of number above will set the OPBITEN, DIV2 and the Mode registers
+        # to give the desired output waveform 
         self.spi.write(bytes([0x20, fun]))
-        print(binascii.hexlify(bytes([0x20, fun])))
         self.cs.value(1)
         
     def set_sine(self):
