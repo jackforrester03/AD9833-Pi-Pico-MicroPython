@@ -18,9 +18,8 @@ To program the AD9833 to give a 10kHz sinusoidal output
 
 ```Python
 from ad9833 import AD9833
-DriveFreq = 10000
 ad9833 = AD9833()
-ad9833.change_freq(DriveFreq)
+ad9833.change_freq(10000)
 ad9833.set_sine()
 ```
 
