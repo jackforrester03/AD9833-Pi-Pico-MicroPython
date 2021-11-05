@@ -36,4 +36,5 @@ A triangle wave output can be achieved using
 ad9833.set_triangle()
 ```
 
-This class is based on the comment by 'horuable' in https://forums.raspberrypi.com/viewtopic.php?t=306297
+### 
+<sup>This class is based on the comment by 'horuable' in https://forums.raspberrypi.com/viewtopic.php?t=306297<sup>
